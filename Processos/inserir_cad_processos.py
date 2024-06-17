@@ -2,6 +2,7 @@ import MySQLdb
 import sys
 from pathlib import Path
 
+
 # Parâmetros de conexão
 
 sys.path.append(str(Path('c:/gestaoversus/bd').resolve()))
