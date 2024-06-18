@@ -1,4 +1,4 @@
-from infra.configs.base import base #gere ou suprima diagnósticos para importações que não tenham nenhum arquivo python importado correspondente ou arquivo stub de tipo. O valor padrão para essa configuração é ."error"
+from infra.configs.base import Base
 from sqlalchemy import Column, String, Integer, TIMESTAMP
 
 # Definir a classe para a tabela Prc_Cad
