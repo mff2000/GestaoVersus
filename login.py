@@ -1,24 +1,11 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
 from pathlib import Path
-import sys
 
 from infra.configs.connection import DBConnectionHandler
 from sqlalchemy import text
 
-# Configuração da página
-st.set_page_config(page_icon=":key:", layout="wide")
-
-# Carregue a imagem (descomente e ajuste o caminho se desejar usar)
-# with open('C:\GestaoVersus\Suporte\Imagens\Imagem_Login.png', 'rb') as f:
-#     image_data = f.read()
-# st.image(image_data, caption='Imagem de Exemplo', width=400)
-
-# Cria a barra lateral (descomente se desejar usar)
-# with st.sidebar:
-#     st.checkbox()
-
-# Função para verificar as credenciais de login (corrigida)
+# Função para verificar as credenciais de login
 def check_login(email, password):
     with DBConnectionHandler() as db_connection:
         session = db_connection.session
@@ -59,12 +46,13 @@ def set_css():
                 width: 100%;
             }
         </style>
-    """,
+        """,
         unsafe_allow_html=True,
     )
 
 # Função para exibir a página de login
 def show_login_page():
+    set_css()
     st.markdown(
         "<h2 style='text-align: center;'>Gestão Versus - Login</h2>",
         unsafe_allow_html=True,
@@ -80,10 +68,7 @@ def show_login_page():
 
 # Função para exibir a página principal
 def show_main_page():
-    exec(Path("c:/gestaoversus/main.py").read_text())
-
-# Aplicar CSS personalizado
-set_css()
+    exec(Path("c:/gestaoversus/main.py").read_text(encoding='utf-8'))
 
 # Verificar se o usuário está logado
 if "logged_in" not in st.session_state:

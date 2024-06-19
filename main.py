@@ -2,18 +2,49 @@
 import streamlit as st
 import sys
 
-# Configuração da página
-#st.set_page_config(layout="wide")
+# Configuração da página (apenas uma vez)
+st.set_page_config(page_title="My App", page_icon=":key:", layout="wide", initial_sidebar_state="expanded")
 
 # Configurar a codificação padrão do sistema para UTF-8
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
 
+def custom_header(title):
+    st.markdown(
+        f"""
+        <style>
+            header {{
+                background-color: #243F8E;
+                padding: 4px;
+                text-align: center;
+                width: 100%; /* Garante que o cabeçalho ocupe toda a largura da tela */
+                box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
+            }}
+            header h1 {{
+                margin: 0;
+                color: white;
+                font-family: Arial, sans-serif;
+                font-size: 16px;
+                word-wrap: break-word; /* Permite que o texto quebre em várias linhas */
+            }}
+            .stApp {{ /* Estiliza o container principal do Streamlit */
+                max-width: 100%; /* Evita que o conteúdo ultrapasse a largura da tela */
+                margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+            }}
+        </style>
+        <header>
+            <h1>{title}</h1>
+        </header>
+        """,
+        unsafe_allow_html=True,
+    )
+
+custom_header("Versus Gestão Corporativa - Estruturação Empresarial")
 
 # Lista de itens do menu
 menu_items_list_movimentos = [
     "01 - Dashboard de Indicadores de Processos",
-    "02 - Gestao de Indicadores e Metas",
+    "02 - Gestão de Indicadores e Metas",
     "03 - Mapa de Processos",
     "04 - Processos - Cadastro de Processos",
     "05 - Processos - Cadastro de Atividades de Processos",
@@ -23,10 +54,10 @@ menu_items_list_cadastro = [
     "06 - Processos - Rotinas",
     "07 - Geral - Cadastro de Colaboradores",
     "08 - Geral - Cadastro de Indicadores e Metas",
-    "09 - Processos - Conhecimento Tecnico / Gestao / Requisitos",
+    "09 - Processos - Conhecimento Técnico / Gestão / Requisitos",
     "10 - Processos - Fornecedores | Insumos Consumidos",
-    "11 - Processos - Estrutura Fisica",
-    "12 - Processos - Estrutura Logica",
+    "11 - Processos - Estrutura Física",
+    "12 - Processos - Estrutura Lógica",
     "13 - Processos - Capacidade Operacional",
     "14 - Processos - Compliance",
     "15 - Processos - Auditoria",
@@ -37,46 +68,19 @@ menu_items_list_cadastro = [
 # Adicionar CSS para definir o tamanho fixo dos botões e alinhar na parte superior
 st.markdown("""
 <style>
-    .stApp {
-    padding-top: 1rem; /* Adiciona um pequeno preenchimento para evitar que o título grude na barra lateral */
-}
-    .stApp { /* Alterado para a classe 'stApp' */
-        display: flex;
-        flex-direction: column; 
-        align-items: flex-start; 
-        min-height: 100vh; 
-    }
-    
-    .stApp {
-    margin-top: 0; /* Remove a margem superior padrão do contêiner principal */
-    padding-top: 0; /* Remove o preenchimento superior padrão do contêiner principal */
-}
-
-.centered-title { /* Remove as margens e preenchimentos do título */
-    margin: 0;
-    padding: 0;
-}
-
-.css-18e3th9 { /* Remove o preenchimento superior de outro elemento */
-    padding-top: 0;
-}
-    .stButton button {
-        height: 150px;
-        width: 175px;
-    }
-    .centered-title {
-        text-align: center;
-        margin-top: 0;
+    .css-18e3th9 { /* Remove o preenchimento superior de outro elemento */
         padding-top: 0;
     }
-    .css-18e3th9 {
-        padding-top: 0px;
+    .stButton button {
+        height: 100px;
+        width: 175px;
     }
+
     .vertical-text {
         writing-mode: vertical-rl;
         text-orientation: mixed;
         transform: rotate(180deg);
-        margin-top: 50px;
+        margin-top: 10px;
         font-size: 20px;
         align-items: center;
     }
@@ -92,13 +96,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
-# Título centralizado
-col1, col2 = st.columns([1,6])
-with col1:
-    ''
-with col2:
-    st.markdown("<h1 class='centered-title'>Versus Gestao Corporativa</h1>", unsafe_allow_html=True)
 
 # Função para criar botões em grade
 def create_button_grid(items, title, cols=6):
