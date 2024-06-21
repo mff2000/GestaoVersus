@@ -1,10 +1,19 @@
+from dotenv import load_dotenv
+load_dotenv()
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
+import os
+import sys
+
+# Adiciona o caminho da pasta entities ao sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'entities'))) 
 
 # Importa a configuração de conexão e o modelo
 from infra.configs.connection import DBConnectionHandler
-from infra.entities import Base
+from infra.configs.base import Base
+from infra.entities.Prc_Cad import Processo  # Importe o modelo Processo
+
 
 config = context.config
 
@@ -13,6 +22,9 @@ fileConfig(config.config_file_name)
 
 # Adiciona a metadada do modelo para suporte ao autogerenciamento
 target_metadata = Base.metadata
+
+# Para verificar se os modelos estão sendo detectados
+print(f"Metadados detectados: {target_metadata.tables}")
 
 def run_migrations_offline():
     """Executa migrações no modo offline."""

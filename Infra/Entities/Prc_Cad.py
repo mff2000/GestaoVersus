@@ -28,6 +28,7 @@ class Processo(Base):
     PRC_ANALISE_CUSTOS_ID = Column(Integer, nullable=True)  # Aceita valores nulos
     PRC_COMPLIANCE_ID = Column(Integer, nullable=True)  # Aceita valores nulos
     PRC_AUDITORIA_ID = Column(Integer, nullable=True)  # Aceita valores nulos
+    TESTEMFF = Column(Integer, nullable=True)  # Aceita valores nulos
     PRC_DT_CADASTRO = Column(TIMESTAMP)
     PRC_DT_ALTERACAO = Column(TIMESTAMP)
     PRC_DT_EXCLUSAO = Column(TIMESTAMP)
