@@ -2,7 +2,7 @@ from infra.configs.base import Base
 from sqlalchemy import Column, String, Integer, TIMESTAMP
 
 # Definir a classe para a tabela Prc_Cad
-class Processo(Base):
+class Prc_Cad(Base):
     __tablename__ = 'Prc_Cad'
     
     PRC_id = Column(Integer, primary_key=True, autoincrement=True)  # Corrigido para autoincrement

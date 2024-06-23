@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 # Importa a configuração de conexão e o modelo
 from infra.configs.connection import DBConnectionHandler
 from infra.configs.base import Base
-from infra.entities.Prc_Cad import Processo  # Importe o modelo Processo
+from infra.entities.Prc_Cad import Prc_Cad  # Alterado de Processo para Prc_Cad
 
 
 config = context.config

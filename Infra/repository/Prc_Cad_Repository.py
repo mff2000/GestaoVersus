@@ -7,7 +7,7 @@ import os
 from ..entities.Prc_Cad import Processo 
 
 from infra.configs.connection import DBConnectionHandler
-from infra.entities.Prc_Cad import Processo
+from infra.entities.Prc_Cad import Prc_Cad #Alterado de Processo para Prc_Cad
 
 class Prc_Cad_Repository:
     def select(self):
