@@ -1,8 +1,8 @@
-"""Initial migration
+"""criando a tabela Prc_Cad
 
-Revision ID: 3585dc3c161b
-Revises: 
-Create Date: 2024-06-20 22:16:49.033980
+Revision ID: 1b9d99dd13d1
+Revises: 6a2ac920320d
+Create Date: 2024-06-23 13:33:52.033403
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '3585dc3c161b'
+revision: str = '1b9d99dd13d1'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
