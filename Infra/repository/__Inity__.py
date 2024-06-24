@@ -1,0 +1,20 @@
+# infra/repository/__init__.py
+
+# Importe todos os repositórios
+from .ger_time_repository import GerTimeRepository
+from .ger_usuarios_repository import GerUsuariosRepository
+from .prc_analise_custos_repository import PrcAnaliseCustosRepository
+from .prc_ativ_cad_repository import PrcAtivCadRepository
+from .prc_auditoria_repository import PrcAuditoriaRepository
+from .prc_cad_repository import PrcCadRepository
+from .prc_cap_operac_repository import PrcCapacOperacRepository
+from .prc_compliance_repository import PrcComplianceRepository
+from .prc_conhec_repository import PrcConhecRepository
+from .prc_entrega_cli_repository import PrcEntregaCliRepository
+from .prc_estr_fisica_repository import PrcEstrFisicaRepository
+from .prc_estr_logica_repository import PrcEstrLogicaRepository
+from .prc_forn_e_itens_cons_repository import PrcForneItensConsRepository
+from .ger_indic_repository import GerIndicRepository
+from .prc_modelagem_repository import PrcModelagemRepository
+from .prc_rotina_repository import PrcRotinaRepository
+from .prj_gestao_repository import PrjGestaoRepository
