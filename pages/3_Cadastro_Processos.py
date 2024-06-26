@@ -68,7 +68,7 @@ def cadastro_page():
 
         # Form submission buttons
         if st.form_submit_button("Salvar"):
-            if create_process(prc_tipo, prc_nome):
+            if create_process(prc_codigo, prc_nome):
                 st.success("Processo cadastrado com sucesso!")
             else:
                 st.error("Erro ao cadastrar processo.")
