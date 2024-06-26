@@ -12,7 +12,7 @@ def cadastro_page():
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            prc_codigo = st.text_input("Código", max_chars=256)
+            prc_codigo = st.text_input("Código", max_chars=19)
         
         with col2:
             macroprocesso_pai = st.selectbox("Macroprocesso Pai", ["Opção 1", "Opção 2"])  # Adjust options as needed
@@ -21,16 +21,13 @@ def cadastro_page():
             nivel = st.number_input("Nível", min_value=0, max_value=999)
         
         # Second row with two columns
-        col4, col5 = st.columns(2)
+        col4, = st.columns(1)
         
         with col4:
             prc_nome = st.text_input("Nome", max_chars=256)
         
-        with col5:
-            prc_tipo = st.text_input("Tipo de Processo", max_chars=256)
-        
         # Third row with single column
-        prc_objetivo = st.text_area("Objetivo do Processo", max_chars=256)
+        prc_objetivo = st.text_area("Objetivo do Processo", max_chars=512)
 
         # Tabs for bottom sections
         tabs = st.tabs(["Conhecimento", "Estrutura", "Dono/Times", "Gestão", "Atividades/POPs"])
@@ -45,21 +42,21 @@ def cadastro_page():
         with tabs[1]:
             st.subheader("Estrutura")
             estrutura_fisica = st.number_input("Estrutura Física Nota", min_value=0, max_value=999)
-            estrutura_fisica_desc = st.text_input("Estrutura Física Descrição", max_chars=256)
+            estrutura_fisica_desc = st.text_area("Estrutura Física Descrição", max_chars=256)
             estrutura_logica = st.number_input("Estrutura Lógica Nota", min_value=0, max_value=999)
-            estrutura_logica_desc = st.text_input("Estrutura Lógica Descrição", max_chars=256)
+            estrutura_logica_desc = st.text_area("Estrutura Lógica Descrição", max_chars=256)
         
         with tabs[2]:
             st.subheader("Dono/Times")
             dono = st.selectbox("Dono", ["Opção 1", "Opção 2"])  # Adjust options as needed
-            time = st.selectbox("Time", ["Opção 1", "Opção 2"])  # Adjust options as needed
+            times = st.multiselect("Times", ["Opção 1", "Opção 2", "Opção 3", "Opção 4"])  # Ajuste as opções conforme necessário
         
         with tabs[3]:
             st.subheader("Gestão")
             rotina = st.selectbox("Rotina", ["Opção 1", "Opção 2"])  # Adjust options as needed
             indicador = st.multiselect("Indicador", ["Opção 1", "Opção 2"])  # Adjust options as needed
             modelagem = st.selectbox("Modelagem", ["Opção 1", "Opção 2"])  # Adjust options as needed
-            recurso = st.selectbox("Recurso Utilizado", ["Opção 1", "Opção 2"])  # Adjust options as needed
+            recurso = st.multiselect("Recurso Utilizado", ["Opção 1", "Opção 2", "Opcao 3"])  # Adjust options as needed
             fornecedores = st.text_area("Fornecedores e Itens Consumidos")
             compliance = st.multiselect("Compliance", ["Opção 1", "Opção 2"])  # Adjust options as needed
             auditoria = st.multiselect("Auditoria", ["Opção 1", "Opção 2"])  # Adjust options as needed
