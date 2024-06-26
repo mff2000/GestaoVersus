@@ -1,7 +1,11 @@
 import streamlit as st
 from utils import create_process
+from ui_utils import add_bg_from_local, set_styles
 
-st.set_page_config(page_title="Cadastro de Processos", layout="wide")
+# Configuração da página
+st.set_page_config(page_title="Outra Página", layout="wide")
+add_bg_from_local('assets\Logo_Versus_Clara.png')  # Use a mesma imagem ou outra
+set_styles()
 
 def cadastro_page():
     st.title("Cadastro de Processos")

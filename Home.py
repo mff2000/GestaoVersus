@@ -1,31 +1,11 @@
 import streamlit as st
-from utils import check_login
-import base64
-
-# Função para carregar imagem de fundo
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
-        background-size: 50% auto;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-    )
+from utils import check_login  # Importa a função de login do seu utils.py
+from ui_utils import add_bg_from_local, set_styles
 
 # Configuração da página
 st.set_page_config(page_title="Gestão Versus", layout="wide")
-
-# Adicione o fundo
-add_bg_from_local('assets\Logo_Versus_Clara.png')
+add_bg_from_local('assets\Logo_Versus_Clara.png') 
+set_styles()
 
 # Estilos CSS personalizados
 st.markdown("""
