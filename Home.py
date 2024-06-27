@@ -3,8 +3,8 @@ from utils import check_login  # Importa a função de login do seu utils.py
 from ui_utils import add_bg_from_local, set_styles
 
 # Configuração da página
-st.set_page_config(page_title="Gestão Versus", layout="wide")
-add_bg_from_local('assets\Logo_Versus_Clara.png') 
+st.set_page_config(page_title="Gestão Versus", layout="wide", page_icon="assets/Icone_Versus.jpg")
+add_bg_from_local('assets\Logo_Versus_Clara.png')
 set_styles()
 
 # Estilos CSS personalizados

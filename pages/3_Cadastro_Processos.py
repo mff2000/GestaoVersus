@@ -3,7 +3,7 @@ from utils import create_process
 from ui_utils import add_bg_from_local, set_styles
 
 # Configuração da página
-st.set_page_config(page_title="Outra Página", layout="wide")
+st.set_page_config(page_title="Outra Página", layout="wide", page_icon="assets/Icone_Versus.jpg")
 add_bg_from_local('assets\Logo_Versus_Clara.png')  # Use a mesma imagem ou outra
 set_styles()
 
@@ -34,7 +34,7 @@ def cadastro_page():
         prc_objetivo = st.text_area("Objetivo do Processo", max_chars=512)
 
         # Tabs for bottom sections
-        tabs = st.tabs(["Conhecimento", "Estrutura", "Dono/Times", "Gestão", "Atividades/POPs"])
+        tabs = st.tabs(["Conhecimento", "Estrutura", "Times/Rotinas", "Outros", "Conformidade", "Atividades/POPs"])
 
         with tabs[0]:
             st.subheader("Conhecimento")
@@ -51,21 +51,22 @@ def cadastro_page():
             estrutura_logica_desc = st.text_area("Estrutura Lógica Descrição", max_chars=256)
         
         with tabs[2]:
-            st.subheader("Dono/Times")
-            dono = st.selectbox("Dono", ["Opção 1", "Opção 2"])  # Adjust options as needed
+            st.subheader("Times/Rotinas")
             times = st.multiselect("Times", ["Opção 1", "Opção 2", "Opção 3", "Opção 4"])  # Ajuste as opções conforme necessário
+            rotina = st.selectbox("Rotina", ["Opção 1", "Opção 2"])  # Adjust options as needed
         
         with tabs[3]:
-            st.subheader("Gestão")
-            rotina = st.selectbox("Rotina", ["Opção 1", "Opção 2"])  # Adjust options as needed
-            indicador = st.multiselect("Indicador", ["Opção 1", "Opção 2"])  # Adjust options as needed
+            st.subheader("Outros")
             modelagem = st.selectbox("Modelagem", ["Opção 1", "Opção 2"])  # Adjust options as needed
             recurso = st.multiselect("Recurso Utilizado", ["Opção 1", "Opção 2", "Opcao 3"])  # Adjust options as needed
             fornecedores = st.text_area("Fornecedores e Itens Consumidos")
+
+        with tabs[4]:
+            st.subheader("Conformidade")
             compliance = st.multiselect("Compliance", ["Opção 1", "Opção 2"])  # Adjust options as needed
             auditoria = st.multiselect("Auditoria", ["Opção 1", "Opção 2"])  # Adjust options as needed
 
-        with tabs[4]:
+        with tabs[5]:
             st.subheader("Atividades/POPs")
             atividade = st.selectbox("Atividade", ["Opção 1", "Opção 2"])  # Adjust options as needed
             pop_da_atividade = st.text_area("Pop da Atividade")
