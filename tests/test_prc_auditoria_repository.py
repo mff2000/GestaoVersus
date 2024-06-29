@@ -2,7 +2,7 @@ import pytest
 from faker import Faker
 from sqlalchemy.orm import Session
 from infra.configs.connection import DBConnectionHandler
-from infra.entities.Prc_Auditoria import Prc_Auditoria
+from infra.entities.Prc_Auditoria_Tipo import Prc_Auditoria
 from infra.repository.prc_auditoria_repository import PrcAuditoriaRepository
 
 fake = Faker()

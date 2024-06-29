@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from infra.entities.Prc_Auditoria import Prc_Auditoria
+from infra.entities.Prc_Auditoria_Tipo import Prc_Auditoria
 
 class PrcAuditoriaRepository:
     def __init__(self, session: Session):
