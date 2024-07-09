@@ -25,16 +25,19 @@ def cadastro_page():
             nivel = st.number_input("Nível", min_value=0, max_value=999)
         
         # Second row with two columns
-        col4, = st.columns(1)
+        col4, col5 = st.columns(2)
         
         with col4:
             prc_nome = st.text_input("Nome", max_chars=256)
+
+        with col5:
+            modelagem_status = st.selectbox("Modelagem Status", ["Opção 1", "Opção 2"])
         
         # Third row with single column
         prc_objetivo = st.text_area("Objetivo do Processo", max_chars=512)
 
         # Tabs for bottom sections
-        tabs = st.tabs(["Conhecimento", "Estrutura", "Times/Rotinas", "Outros", "Conformidade", "Atividades/POPs"])
+        tabs = st.tabs(["Conhecimento", "Estrutura", "Times/Rotinas", "Recursos e Fornecedores", "Conformidade", "Atividades/POPs"])
 
         with tabs[0]:
             st.subheader("Conhecimento")
@@ -56,8 +59,7 @@ def cadastro_page():
             rotina = st.selectbox("Rotina", ["Opção 1", "Opção 2"])  # Adjust options as needed
         
         with tabs[3]:
-            st.subheader("Outros")
-            modelagem = st.selectbox("Modelagem", ["Opção 1", "Opção 2"])  # Adjust options as needed
+            st.subheader("Recursos e Forncedores")
             recurso = st.multiselect("Recurso Utilizado", ["Opção 1", "Opção 2", "Opcao 3"])  # Adjust options as needed
             fornecedores = st.text_area("Fornecedores e Itens Consumidos")
 
@@ -71,15 +73,18 @@ def cadastro_page():
             atividade = st.selectbox("Atividade", ["Opção 1", "Opção 2"])  # Adjust options as needed
             pop_da_atividade = st.text_area("Pop da Atividade")
 
+        col6, col7 = st.columns(2)
+        
         # Form submission buttons
-        if st.form_submit_button("Salvar"):
-            if create_process(prc_codigo, prc_nome):
-                st.success("Processo cadastrado com sucesso!")
-            else:
-                st.error("Erro ao cadastrar processo.")
-
-        if st.form_submit_button("Limpar"):
-            st.experimental_rerun()
+        with col6:
+            if st.form_submit_button("Salvar"):
+                if create_process(prc_codigo, prc_nome):
+                    st.success("Processo cadastrado com sucesso!")
+                else:
+                    st.error("Erro ao cadastrar processo.")
+        with col7:
+            if st.form_submit_button("Limpar"):
+                st.experimental_rerun()
 
 if st.session_state.get("logged_in", False):
     cadastro_page()
