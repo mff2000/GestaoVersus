@@ -56,14 +56,29 @@ def home_page():
     st.markdown("<h1 style='text-align: center; color: #003366;'>Versus Gestão Corporativa</h1>", unsafe_allow_html=True)
     st.markdown("<h3 style='text-align: center;'>Bem-vindo ao Nosso Sistema de Gestão de Processos</h3>", unsafe_allow_html=True)
     st.write("Nosso objetivo é transformar sua empresa na:")
-    st.markdown("<h2 style='text-align: center; color: #003366;'>Melhor Versão Dela Mesma!</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; color: #003366;'>Melhor Versão De Si Mesma!</h2>", unsafe_allow_html=True)
     st.write("Use o menu lateral para navegar entre as diferentes funcionalidades do sistema.")
+
+    # Linha divisória
+    st.markdown("---")  # Cria uma linha horizontal simples
+
+    st.markdown("<h2 style='text-align: center; color: green;'>Acompanhamento de Atividades</h2>", unsafe_allow_html=True)  # Título da seção
     
-    col1, col2 = st.columns(2)
+    col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
-        st.warning("Usuário: Fulano de tal")
+        st.markdown("**Título da Atividade**")  # Use markdown para formatar o título
+
     with col2:
-        st.warning("Atividades Pendentes")
+        st.write("Responsável")  # st.write é mais simples para texto sem formatação
+
+    with col3:
+        st.write("Prazo")
+
+    with col4:
+        st.write("Processo / Projeto")
+
+    with col5:
+        st.write("Status")
 
 # Verifica se o usuário está logado
 if "logged_in" not in st.session_state:
@@ -75,12 +90,16 @@ if not st.session_state["logged_in"]:
 else:
     home_page()
 
-# Configuração do sidebar
-if st.session_state["logged_in"]:
-    st.sidebar.markdown("<h3 style='color: white;'>Menu</h3>", unsafe_allow_html=True)
+# # Configuração do sidebar
+# if st.session_state["logged_in"]:
+#     with st.sidebar:
+#         with st.expander("Gerenc. Processos"):
+#             st.link_button("Cadastro de Processos", "Cadastro_Processos")
+
     # Adicione aqui os itens do menu
+    
     if st.sidebar.button("Logout"):
         st.session_state["logged_in"] = False
         st.experimental_rerun()
 
-st.sidebar.markdown("<div style='position: fixed; bottom: 0; left: 0; padding: 10px; color: white;'>Selecione uma página acima.</div>", unsafe_allow_html=True)
+st.sidebar.markdown("<div style='position: fixed; bottom: 0; left: 0; padding: 10px; color: black;'>Selecione uma página acima.</div>", unsafe_allow_html=True)

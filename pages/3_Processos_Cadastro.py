@@ -3,7 +3,7 @@ from utils import create_process
 from ui_utils import add_bg_from_local, set_styles
 
 # Configuração da página
-st.set_page_config(page_title="Outra Página", layout="wide", page_icon="assets/Icone_Versus.jpg")
+st.set_page_config(page_title="Processos Cadastro", layout="wide", page_icon="assets/Icone_Versus.jpg")
 add_bg_from_local('assets\Logo_Versus_Clara.png')  # Use a mesma imagem ou outra
 set_styles()
 
@@ -85,6 +85,10 @@ def cadastro_page():
         with col7:
             if st.form_submit_button("Limpar"):
                 st.experimental_rerun()
+
+    if st.sidebar.button("Logout"):
+        st.session_state["logged_in"] = False
+        st.experimental_rerun()
 
 if st.session_state.get("logged_in", False):
     cadastro_page()
