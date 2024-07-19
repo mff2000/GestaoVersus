@@ -1,17 +1,30 @@
-# infra/entities/Prc_Modelagem.py
+# infra/entities/prc_modelagem.py
+
 from infra.configs.base import Base
-from sqlalchemy import Column, Integer, String, Text, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey
+from sqlalchemy.orm import relationship  # Para relacionamentos (opcional)
 
 class Prc_Modelagem(Base):
-    __tablename__ = 'PRC_MODELAGEM'
+    """
+    Representa uma etapa de modelagem em um processo.
+    """
 
-    PRC_MODELAGEM_ID = Column(Integer, primary_key=True, autoincrement=True)
-    PRC_MODELAGEM_NOME = Column(String(255))
-    PRC_MODELAGEM_DESCR = Column(Text)
-    PRC_MODELAGEM_OBSERV = Column(Text)
-    PRC_MODELAGEM_DT_CRIACAO = Column(DateTime, nullable=False)
-    PRC_MODELAGEM_DT_ALTERACAO = Column(DateTime, nullable=True)
-    PRC_MODELAGEM_DT_EXCLUSAO = Column(DateTime, nullable=True)
+    __tablename__ = 'prc_modelagem'
+
+    PRC_MODELAGEM_ID = Column(Integer, primary_key=True, autoincrement=True)  # ID da etapa
+    PRC_MODELAGEM_ID_PROCESSO = Column(Integer, ForeignKey('PRC_CAD.PRC_CAD_ID'))  # ID do processo
+    PRC_MODELAGEM_ORDEM_ATIVIDADE = Column(Integer, nullable=False)  # Número da etapa
+    PRC_MODELAGEM_NOME_ATIVIDADE = Column(String(256), nullable=False)  # Nome detalhado da etapa
+    PRC_MODELAGEM_DESCR_ATIVIDADE = Column(String(512))  # Descrição da etapa (opcional)
+    PRC_MODELAGEM_TIME_RESP_ID = Column(Integer, ForeignKey('Ger_Time.GER_TIME_ID'))  # ID do time (opcional)
+    PRC_MODELAGEM_EH_PONTO_DECISAO = Column(Boolean, default=False)  # Ponto de decisão?
+    PRC_MODELAGEM_POP = Column(String(10000))
+    PRC_MODELAGEM_DATA_CRIACAO = Column(DateTime, nullable=False)
+    PRC_MODELAGEM_DATA_CRIACAO = Column(DateTime)
+    PRC_MODELAGEM_DATA_EXCLUSAO = Column(DateTime)
+
+    # Relacionamento com o time (opcional)
+    time_responsavel = relationship("Ger_Time", backref="PRC_MODELAGEM_TIME_RESP_ID")  
 
     def __repr__(self):
-        return f"Prc_Modelagem(PRC_MODELAGEM_ID={self.PRC_MODELAGEM_ID}, PRC_MODELAGEM_NOME={self.PRC_MODELAGEM_NOME})"
+        return f"PrcModelagem(id={self.id}, nome='{self.nome}', numero_etapa={self.numero_etapa})"

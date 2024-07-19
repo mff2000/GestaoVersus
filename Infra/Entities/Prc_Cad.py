@@ -1,10 +1,10 @@
-from sqlalchemy import Column, String, Integer, TIMESTAMP
+from sqlalchemy import Column, String, Integer, Timestamp, ForeignKey
 from infra.configs.base import Base
 
 class Prc_Cad(Base):
     __tablename__ = 'Prc_Cad'
 
-    PRC_id = Column(Integer, primary_key=True, autoincrement=True)
+    PRC_ID = Column(Integer, primary_key=True, autoincrement=True)
     PRC_CODIGO = Column(String(19), nullable=True)
     PRC_MP_PAI = Column(Integer, nullable=True)  # Adicionado nullable=True para consistência
     PRC_NIVEL = Column(Integer)
@@ -27,13 +27,13 @@ class Prc_Cad(Base):
     PRC_COMPLIANCE_ID = Column(Integer, nullable=True)
     PRC_AUDITORIA_ID = Column(Integer, nullable=True)
 
-    PRC_MODELAGEM_ID = Column(Integer, nullable=True)
+    PRC_MODELAGEM_ID = Column(Integer, ForeignKey('Prc_Modelagem.Prc_Modelagem_ID'))  # ID da Modelagem
     PRC_RECURSOS_UTILIZ_ID = Column(Integer, nullable=True)  # Adicionado nullable=True para consistência
     PRC_FORNE_ITENS_CONS = Column(String(256), nullable=True)
 
-    PRC_DT_CADASTRO = Column(TIMESTAMP, nullable=False)  # Corrigido para nullable=False
-    PRC_DT_ALTERACAO = Column(TIMESTAMP, nullable=True)
-    PRC_DT_EXCLUSAO = Column(TIMESTAMP, nullable=True)
+    PRC_DT_CADASTRO = Column(Timestamp, nullable=False)  # Corrigido para nullable=False
+    PRC_DT_ALTERACAO = Column(Timestamp, nullable=True)
+    PRC_DT_EXCLUSAO = Column(Timestamp, nullable=True)
 
     def __repr__(self):
         # Ajustado para incluir apenas as colunas existentes
