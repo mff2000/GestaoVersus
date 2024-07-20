@@ -1,4 +1,4 @@
-from infra.configs.connection import DBConnectionHandler
+from infra import DBConnectionHandler
 from infra.repository.prc_cad_repository import PrcCadRepository
 from sqlalchemy import text
 

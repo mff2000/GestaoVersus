@@ -1,4 +1,6 @@
 import streamlit as st
+import sys
+print (sys.path)
 from utils import check_login  # Importa a função de login do seu utils.py
 from ui_utils import add_bg_from_local, set_styles
 

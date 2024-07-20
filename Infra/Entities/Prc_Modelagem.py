@@ -16,11 +16,12 @@ class Prc_Modelagem(Base):
     PRC_MODELAGEM_ORDEM_ATIVIDADE = Column(Integer, nullable=False)  # Número da etapa
     PRC_MODELAGEM_NOME_ATIVIDADE = Column(String(256), nullable=False)  # Nome detalhado da etapa
     PRC_MODELAGEM_DESCR_ATIVIDADE = Column(String(512))  # Descrição da etapa (opcional)
-    PRC_MODELAGEM_TIME_RESP_ID = Column(Integer, ForeignKey('Ger_Time.GER_TIME_ID'))  # ID do time (opcional)
+    PRC_MODELAGEM_TIME_RESP_ID = Column(Integer, ForeignKey('Ger_Time'))  # ID do time (opcional)
     PRC_MODELAGEM_EH_PONTO_DECISAO = Column(Boolean, default=False)  # Ponto de decisão?
-    PRC_MODELAGEM_POP = Column(String(10000))
+    PRC_MODELAGEM_POP = Column(String(256))
+    PRC_MODELAGEM_VIDEO = Column(String(256))
     PRC_MODELAGEM_DATA_CRIACAO = Column(DateTime, nullable=False)
-    PRC_MODELAGEM_DATA_CRIACAO = Column(DateTime)
+    PRC_MODELAGEM_DATA_ALTERACAO = Column(DateTime)
     PRC_MODELAGEM_DATA_EXCLUSAO = Column(DateTime)
 
     # Relacionamento com o time (opcional)

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Timestamp, ForeignKey
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 from infra.configs.base import Base
 
 class Prc_Cad(Base):
@@ -31,9 +31,9 @@ class Prc_Cad(Base):
     PRC_RECURSOS_UTILIZ_ID = Column(Integer, nullable=True)  # Adicionado nullable=True para consistência
     PRC_FORNE_ITENS_CONS = Column(String(256), nullable=True)
 
-    PRC_DT_CADASTRO = Column(Timestamp, nullable=False)  # Corrigido para nullable=False
-    PRC_DT_ALTERACAO = Column(Timestamp, nullable=True)
-    PRC_DT_EXCLUSAO = Column(Timestamp, nullable=True)
+    PRC_DT_CADASTRO = Column(DateTime, nullable=False)  # Corrigido para nullable=False
+    PRC_DT_ALTERACAO = Column(DateTime, nullable=True)
+    PRC_DT_EXCLUSAO = Column(DateTime, nullable=True)
 
     def __repr__(self):
         # Ajustado para incluir apenas as colunas existentes
