@@ -1,7 +1,9 @@
 import streamlit as st
 import base64
 
+
 def add_bg_from_local(image_file):
+    """Adiciona uma imagem de fundo a partir de um arquivo local."""
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
     st.markdown(
@@ -14,33 +16,38 @@ def add_bg_from_local(image_file):
             background-repeat: no-repeat;
             background-attachment: fixed;
         }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-def set_styles():
-    st.markdown("""
-    <style>
-        .reportview-container {
-            background: transparent;
-        }
-        .main {
-            background-color: rgba(255,255,255,0.7);
+        .main {{
+            background-color: rgba(255, 255, 255, 0.7); /* Cor de fundo do container principal */
             padding: 20px;
             border-radius: 10px;
-        }
-        h1, h2, h3 {
-            color: #003366;
-        }
-        .stButton>button {
-            background-color: #003366;
+        }}
+        h1, h2, h3 {{
+            color: #003366; /* Cor dos títulos */
+        }}
+        .stButton button {{
+            background-color: #007BFF; /* Cor de fundo do botão (azul) */
             color: white;
-        }
-        .sidebar .sidebar-content {
-            background-color: rgba(0,51,102,0.8);
-        }
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-    </style>
-    """, unsafe_allow_html=True)
+            border: none;
+        }}
+        .stTextInput input {{
+            border: 1px solid #CED4DA; /* Borda cinza suave */
+            border-radius: 5px;
+        }}
+        .stTextArea textarea {{
+            border: 1px solid #CED4DA;
+            border-radius: 5px;
+        }}
+        .stTabs [data-baseweb="tab-list"] button {{
+            background-color: #E9ECEF; /* Cor de fundo das abas (cinza claro) */
+        }}
+        .stTabs [data-baseweb="tab-list"] button:hover {{
+            background-color: #DEE2E6; /* Cor de fundo das abas ao passar o mouse */
+        }}
+        .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {{
+            background-color: #007BFF; /* Cor de fundo da aba selecionada (azul) */
+            color: white;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )

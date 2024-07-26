@@ -27,9 +27,13 @@ class Prc_Cad(Base):
     PRC_COMPLIANCE_ID = Column(Integer, nullable=True)
     PRC_AUDITORIA_ID = Column(Integer, nullable=True)
 
-    PRC_MODELAGEM_ID = Column(Integer, ForeignKey('Prc_Modelagem.Prc_Modelagem_ID'))  # ID da Modelagem
+    PRC_MODELAGEM_ID = Column(Integer, ForeignKey('Prc_Modelagem.Prc_Modelagem_ID'))  #Sem uso por enquanto, será utilizada quando a tabela Prc_Modelagem começar a ser usada.
     PRC_RECURSOS_UTILIZ_ID = Column(Integer, nullable=True)  # Adicionado nullable=True para consistência
     PRC_FORNE_ITENS_CONS = Column(String(256), nullable=True)
+
+    PRC_FLUXO_PROC = Column(String, nullable=True)
+    PRC_POP_PROCESSO = Column(String, nullable=True)
+    PRC_MODELAGEM_STATUS = Column(String, nullable=True)
 
     PRC_DT_CADASTRO = Column(DateTime, nullable=False)  # Corrigido para nullable=False
     PRC_DT_ALTERACAO = Column(DateTime, nullable=True)

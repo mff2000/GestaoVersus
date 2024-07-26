@@ -25,7 +25,7 @@ class Prc_Modelagem(Base):
     PRC_MODELAGEM_DATA_EXCLUSAO = Column(DateTime)
 
     # Relacionamento com o time (opcional)
-    time_responsavel = relationship("Ger_Time", backref="PRC_MODELAGEM_TIME_RESP_ID")  
+    # time_responsavel = relationship("Ger_Time", backref="PRC_MODELAGEM_TIME_RESP_ID")  
 
     def __repr__(self):
         return f"PrcModelagem(id={self.id}, nome='{self.nome}', numero_etapa={self.numero_etapa})"
