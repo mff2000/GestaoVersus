@@ -9,14 +9,14 @@ class Prc_Modelagem(Base):
     Representa uma etapa de modelagem em um processo.
     """
 
-    __tablename__ = 'prc_modelagem'
+    __tablename__ = 'PRC_MODELAGEM'
 
     PRC_MODELAGEM_ID = Column(Integer, primary_key=True, autoincrement=True)  # ID da etapa
-    PRC_MODELAGEM_ID_PROCESSO = Column(Integer, ForeignKey('PRC_CAD.PRC_CAD_ID'))  # ID do processo
+    PRC_MODELAGEM_ID_PROCESSO = Column(Integer, nullable=False)  # ID do processo
     PRC_MODELAGEM_ORDEM_ATIVIDADE = Column(Integer, nullable=False)  # Número da etapa
     PRC_MODELAGEM_NOME_ATIVIDADE = Column(String(256), nullable=False)  # Nome detalhado da etapa
     PRC_MODELAGEM_DESCR_ATIVIDADE = Column(String(512))  # Descrição da etapa (opcional)
-    PRC_MODELAGEM_TIME_RESP_ID = Column(Integer, ForeignKey('Ger_Time'))  # ID do time (opcional)
+    PRC_MODELAGEM_TIME_RESP_ID = Column(Integer, nullable=False)  # ID do time (opcional)
     PRC_MODELAGEM_EH_PONTO_DECISAO = Column(Boolean, default=False)  # Ponto de decisão?
     PRC_MODELAGEM_POP = Column(String(256))
     PRC_MODELAGEM_VIDEO = Column(String(256))

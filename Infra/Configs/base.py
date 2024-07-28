@@ -1,14 +1,18 @@
-from sqlalchemy.orm import declarative_base
-from .connection import DBConnectionHandler  # Importe a classe de conexão
+from contextlib import contextmanager
+from sqlalchemy.ext.declarative import declarative_base
 
-# Definição da classe Base
 Base = declarative_base()
 
-# Função para obter uma sessão com o banco de dados
+@contextmanager
 def get_session():
-    db_connection = DBConnectionHandler()  # Cria uma instância da classe
-    session = db_connection.session          # Obtém a sessão
-    try:
-        yield session                      # Retorna a sessão
-    finally:
-        db_connection.session.close()       # Garante o fechamento da sessão
+    from .connection import DBConnectionHandler
+    """
+    Gerenciador de contexto para obter uma sessão de banco de dados.
+
+    Este gerenciador de contexto simplifica a obtenção e o uso de uma sessão 
+    do banco de dados, garantindo que a sessão seja fechada corretamente após o uso.
+    """
+
+    with DBConnectionHandler() as db_connection:
+        yield db_connection.session
+

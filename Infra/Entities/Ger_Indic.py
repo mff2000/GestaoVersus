@@ -12,7 +12,7 @@ class Ger_Indic(Base):
     GER_INDIC_RESPONS = Column(String(255))
     GER_INDIC_CALCULO = Column(DECIMAL(10,2))
     GER_INDIC_OBSERV = Column(Text)
-    GER_INDIC_DT_CRIACAO = Column(DateTime, nullable=False)
+    GER_INDIC_DT_CRIACAO = Column(DateTime)
     GER_INDIC_DT_ALTERACAO = Column(DateTime, nullable=True)
     GER_INDIC_DT_EXCLUSAO = Column(DateTime, nullable=True)
 

@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 from infra.configs.base import Base
 
 class Prc_Cad(Base):
-    __tablename__ = 'Prc_Cad'
+    __tablename__ = 'PRC_CAD'
 
     PRC_ID = Column(Integer, primary_key=True, autoincrement=True)
     PRC_CODIGO = Column(String(19), nullable=True)
@@ -27,13 +27,13 @@ class Prc_Cad(Base):
     PRC_COMPLIANCE_ID = Column(Integer, nullable=True)
     PRC_AUDITORIA_ID = Column(Integer, nullable=True)
 
-    PRC_MODELAGEM_ID = Column(Integer, ForeignKey('Prc_Modelagem.Prc_Modelagem_ID'))  #Sem uso por enquanto, será utilizada quando a tabela Prc_Modelagem começar a ser usada.
+    PRC_MODELAGEM_ID = Column(Integer, nullable=True)  #Sem uso por enquanto, será utilizada quando a tabela Prc_Modelagem começar a ser usada.
     PRC_RECURSOS_UTILIZ_ID = Column(Integer, nullable=True)  # Adicionado nullable=True para consistência
     PRC_FORNE_ITENS_CONS = Column(String(256), nullable=True)
 
-    PRC_FLUXO_PROC = Column(String, nullable=True)
-    PRC_POP_PROCESSO = Column(String, nullable=True)
-    PRC_MODELAGEM_STATUS = Column(String, nullable=True)
+    PRC_FLUXO_PROC = Column(String(256), nullable=True)
+    PRC_POP_PROCESSO = Column(String(256), nullable=True)
+    PRC_MODELAGEM_STATUS = Column(String(256), nullable=True)
 
     PRC_DT_CADASTRO = Column(DateTime, nullable=False)  # Corrigido para nullable=False
     PRC_DT_ALTERACAO = Column(DateTime, nullable=True)

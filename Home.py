@@ -1,9 +1,5 @@
 import streamlit as st
-import sys
-
-# import sys
-# print(sys.path)
-from utils import check_login  # Importa a função de login do seu utils.py
+from utils import check_login
 from ui_utils import add_bg_from_local
 
 # Configuração da página
@@ -12,7 +8,7 @@ st.set_page_config(
 )
 add_bg_from_local("assets\Logo_Versus_Clara.png")
 
-# Estilos CSS personalizados (agora no arquivo Home.py)
+# Estilos CSS personalizados
 st.markdown(
     """
 <style>
@@ -82,19 +78,19 @@ def home_page():
     st.write("Use o menu lateral para navegar entre as diferentes funcionalidades do sistema.")
 
     # Linha divisória
-    st.markdown("---")  # Cria uma linha horizontal simples
+    st.markdown("---")
 
     st.markdown(
         "<h2 style='text-align: center; color: green;'>Acompanhamento de Atividades</h2>",
         unsafe_allow_html=True,
-    )  # Título da seção
+    )
 
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
-        st.markdown("**Título da Atividade**")  # Use markdown para formatar o título
+        st.markdown("**Título da Atividade**")
 
     with col2:
-        st.write("Responsável")  # st.write é mais simples para texto sem formatação
+        st.write("Responsável")
 
     with col3:
         st.write("Prazo")
@@ -110,26 +106,30 @@ def home_page():
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 
-# Se não estiver logado, mostra a página de login
-if not st.session_state["logged_in"]:
-    login_page()
-else:
-    home_page()
+# Lógica principal da aplicação
+def app():
+    if not st.session_state["logged_in"]:
+        login_page()
+    else:
+        home_page()
 
-# # Configuração do sidebar
-# if st.session_state["logged_in"]:
-#      with st.sidebar:
-#           with st.expander("Gerenc. Processos"):
-#                st.link_button("Cadastro de Processos", "Cadastro_Processos")
+        # Configuração do sidebar (dentro do bloco if para mostrar apenas quando logado)
+        with st.sidebar:
+            with st.expander("Gerenc. Processos"):
+                st.link_button("Cadastro de Processos", "Cadastro_Processos")
 
-# Adicione aqui os itens do menu
+            # Adicione aqui os itens do menu
 
+            st.markdown(
+                "<div style='position: fixed; bottom: 0; left: 0; padding: 10px; color: black;'>Selecione uma página acima.</div>",
+                unsafe_allow_html=True,
+            )
 
-if st.sidebar.button("Logout"):
-    st.session_state["logged_in"] = False
-    st.experimental_rerun()
+        # Botão de logout
+        if st.sidebar.button("Logout"):
+            st.session_state["logged_in"] = False
+            st.experimental_rerun()
 
-st.sidebar.markdown(
-    "<div style='position: fixed; bottom: 0; left: 0; padding: 10px; color: black;'>Selecione uma página acima.</div>",
-    unsafe_allow_html=True,
-)
+# Executa a aplicação
+if __name__ == "__main__":
+    app()

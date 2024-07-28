@@ -20,5 +20,6 @@ from .Ger_Indic import *
 from .Prc_Modelagem import *
 from .Prc_Rotina import *
 from .Prj_Gestao import *
+from .Prc_Macropr_Pai import *
+from .Prc_Macropr_Avo import *
 # Importe outros modelos conforme necessário
-

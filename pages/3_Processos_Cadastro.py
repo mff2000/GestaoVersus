@@ -1,7 +1,8 @@
 import streamlit as st
 from infra.repository.prc_cad_repository import PrcCadRepository
-from infra.configs.base import Base, get_session
+from infra.configs.base import get_session
 from ui_utils import add_bg_from_local
+from infra.entities.Prc_Cad import Prc_Cad
 
 # Configuração da página
 st.set_page_config(
@@ -16,7 +17,7 @@ add_bg_from_local("assets\Logo_Versus_Clara.png")  # Use a mesma imagem ou outra
 def create_process(prc_cad_repo, process_data):
     """Cria um novo processo usando o repositório."""
     try:
-        new_process = prc_cad_repo.create(**process_data)
+        new_process = prc_cad_repo.create(process_data)  # Passa o objeto Prc_Cad
         return new_process
     except ValueError as e:
         st.error(str(e))
@@ -141,13 +142,14 @@ def cadastro_page():
                     "PRC_ESTR_LOGICA_DESCR": estrutura_logica_desc,
                     # ... (outros campos do formulário)
                 }
+                process_data = Prc_Cad(**process_data)  # Cria um objeto Prc_Cad
 
                 # Obtenha a sessão do banco de dados (correção usando contextmanager)
                 with get_session() as db_session:
                     prc_cad_repo = PrcCadRepository(db_session)
 
                     if prc_codigo:  # Editar processo existente
-                        prc_cad_repo.update(prc_codigo, process_data)  
+                        prc_cad_repo.update(prc_codigo, process_data)
                         st.success("Processo atualizado com sucesso!")
                     else:  # Criar novo processo
                         new_process = create_process(prc_cad_repo, process_data)

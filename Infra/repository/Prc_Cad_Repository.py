@@ -19,7 +19,7 @@ class PrcCadRepository:
         return self._session.query(Prc_Cad).all()
 
     def get_by_id(self, id: int):
-        return self._session.query(Prc_Cad).filter(Prc_Cad.PRC_id == id).first()
+        return self._session.query(Prc_Cad).filter(Prc_Cad.PRC_ID== id).first()
 
     def update(self, id: int, data: dict):
         try:
