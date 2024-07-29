@@ -48,7 +48,7 @@ def cadastro_page():
             prc_nome = st.text_input("Nome", max_chars=256)
 
         with col5:
-            modelagem_status = st.selectbox("Modelagem Status", ["Opção 1", "Opção 2"])
+            modelagem_status = st.selectbox("Modelagem Status", ["Fora do Radar", "Modelando", "Implant./Instavel", "Estabil./Entregue Audit"])
 
         # Third row with single column
         prc_objetivo = st.text_area("Objetivo do Processo", max_chars=512)
@@ -98,7 +98,9 @@ def cadastro_page():
             times = st.multiselect(
                 "Times", ["1", "2", "3", "4"]
             )
-            rotina = st.selectbox("Rotina", ["1", "2"])
+            rotina = st.number_input(
+                "Rotina", min_value=0, max_value=999
+            )
 
         with tabs[3]:
             st.subheader("Recursos e Fornecedores")
@@ -121,7 +123,12 @@ def cadastro_page():
 
         # Map string options to integer values
         macroprocesso_pai_mapping = {"Opção 1": 1, "Opção 2": 2}
-        modelagem_status_mapping = {"Opção 1": 1, "Opção 2": 2}
+        modelagem_status_mapping = {
+            "Fora do Radar": "Fora do Radar",
+            "Modelando": "Modelando",
+            "Implant./Instavel": "Implant./Instavel",
+            "Estabil./Entregue Audit": "Estalid./Engregue Audi"
+        }
 
         # Form submission buttons
         with col6:
@@ -148,6 +155,8 @@ def cadastro_page():
                     PRC_POP_PROCESSO=pop,
                     PRC_COMPLIANCE_ID=None,  # ajustar conforme necessário
                     PRC_AUDITORIA_ID=None,  # ajustar conforme necessário
+                    PRC_TIME_ID=times,
+                    PRC_ROTINA_ID=rotina,
                     PRC_DT_CADASTRO=datetime.now(),  # Adiciona a data atual para DT_CADASTRO
                     PRC_DT_ALTERACAO=None,
                     PRC_DT_EXCLUSAO=None,
@@ -182,3 +191,4 @@ if st.session_state.get("logged_in", False):
     cadastro_page()
 else:
     st.warning("Você precisa fazer login para acessar esta página.")
+
