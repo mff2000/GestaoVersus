@@ -122,42 +122,42 @@ def cadastro_page():
         col6, col7 = st.columns(2)
 
         # Form submission buttons
+        # Form submission buttons
         with col6:
             if st.form_submit_button("Salvar"):
-                # Obter os dados do formulário
-                process_data = {
-                    "PRC_CODIGO": prc_codigo,
-                    "PRC_MP_PAI": macroprocesso_pai,
-                    "PRC_NIVEL": nivel,
-                    "PRC_NOME": prc_nome,
-                    "PRC_MODELAGEM_STATUS": modelagem_status,
-                    "PRC_OBJETIVO": prc_objetivo,
-                    "PRC_CONHEC_TEC_NOTA": conhecimento_tecnico,
-                    "PRC_CONHEC_GEST_NOTA": conhecimento_gestao,
-                    "PRC_CONHEC_RELAC_NOTA": conhecimento_relacionamento,
-                    "PRC_CONHEC_DESC_OBS": conhecimento_desc,
-                    "PRC_ESTR_FISICA_NOTA": estrutura_fisica,
-                    "PRC_ESTR_FISICA_DESCR": estrutura_fisica_desc,
-                    "PRC_ESTR_LOGICA_NOTA": estrutura_logica,
-                    "PRC_ESTR_LOGICA_DESCR": estrutura_logica_desc,
+                # Obter os dados do formulário como um objeto Prc_Cad
+                process_data = Prc_Cad(
+                    PRC_CODIGO=prc_codigo,
+                    PRC_MP_PAI=macroprocesso_pai,
+                    PRC_NIVEL=nivel,
+                    PRC_NOME=prc_nome,
+                    PRC_MODELAGEM_STATUS=modelagem_status,
+                    PRC_OBJETIVO=prc_objetivo,
+                    PRC_CONHEC_TEC_NOTA=conhecimento_tecnico,
+                    PRC_CONHEC_GEST_NOTA=conhecimento_gestao,
+                    PRC_CONHEC_RELAC_NOTA=conhecimento_relacionamento,
+                    PRC_CONHEC_DESC_OBS=conhecimento_desc,
+                    PRC_ESTR_FISICA_NOTA=estrutura_fisica,
+                    PRC_ESTR_FISICA_DESCR=estrutura_fisica_desc,
+                    PRC_ESTR_LOGICA_NOTA=estrutura_logica,
+                    PRC_ESTR_LOGICA_DESCR=estrutura_logica_desc,
                     # ... (outros campos do formulário)
-                }
-                process_data = Prc_Cad(**process_data)  # Cria um objeto Prc_Cad
+                )
 
-                # Obtenha a sessão do banco de dados (correção usando contextmanager)
                 with get_session() as db_session:
                     prc_cad_repo = PrcCadRepository(db_session)
 
-                    if prc_codigo:  # Editar processo existente
+                    existing_process = prc_cad_repo.get_by_codigo(prc_codigo)
+
+                    if existing_process:
                         prc_cad_repo.update(prc_codigo, process_data)
                         st.success("Processo atualizado com sucesso!")
-                    else:  # Criar novo processo
-                        new_process = create_process(prc_cad_repo, process_data)
+                    else:
+                        new_process = prc_cad_repo.create(process_data)
                         if new_process:
                             st.success("Processo cadastrado com sucesso!")
                         else:
-                            # A mensagem de erro já foi exibida em create_process
-                            pass
+                            st.error("Erro ao cadastrar o processo. Verifique os dados e tente novamente.")  # Mensagem de erro genérica
 
         with col7:
             if st.form_submit_button("Limpar"):

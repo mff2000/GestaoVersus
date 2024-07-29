@@ -17,4 +17,3 @@ def create_process(prc_tipo, prc_nome):
     with get_session() as session:
         prc_cad_repo = PrcCadRepository(session)
         # ... (Lógica para criar o processo)
-
