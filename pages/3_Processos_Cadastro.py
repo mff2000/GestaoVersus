@@ -3,16 +3,15 @@ from infra.repository.prc_cad_repository import PrcCadRepository
 from infra.configs.base import get_session
 from ui_utils import add_bg_from_local
 from infra.entities.Prc_Cad import Prc_Cad
+from datetime import datetime
 
 # Configuração da página
 st.set_page_config(
     page_title="Processos Cadastro", layout="wide", page_icon="assets/Icone_Versus.jpg"
 )
-add_bg_from_local("assets\Logo_Versus_Clara.png")  # Use a mesma imagem ou outra
-
+add_bg_from_local("assets/Logo_Versus_Clara.png")  # Use a mesma imagem ou outra
 
 # --- FUNÇÕES ---
-
 
 def create_process(prc_cad_repo, process_data):
     """Cria um novo processo usando o repositório."""
@@ -22,7 +21,6 @@ def create_process(prc_cad_repo, process_data):
     except ValueError as e:
         st.error(str(e))
         return None
-
 
 def cadastro_page():
     st.title("Cadastro de Processos")
@@ -98,21 +96,21 @@ def cadastro_page():
         with tabs[2]:
             st.subheader("Times/Rotinas")
             times = st.multiselect(
-                "Times", ["Opção 1", "Opção 2", "Opção 3", "Opção 4"]
+                "Times", ["1", "2", "3", "4"]
             )
-            rotina = st.selectbox("Rotina", ["Opção 1", "Opção 2"])
+            rotina = st.selectbox("Rotina", ["1", "2"])
 
         with tabs[3]:
             st.subheader("Recursos e Fornecedores")
             recurso = st.multiselect(
-                "Recurso Utilizado", ["Opção 1", "Opção 2", "Opcao 3"]
+                "Recurso Utilizado", ["1", "2", "3"]
             )
             fornecedores = st.text_area("Fornecedores e Itens Consumidos")
 
         with tabs[4]:
             st.subheader("Conformidade")
-            compliance = st.multiselect("Compliance", ["Opção 1", "Opção 2"])
-            auditoria = st.multiselect("Auditoria", ["Opção 1", "Opção 2"])
+            compliance = st.multiselect("Compliance", ["1", "2"])
+            auditoria = st.multiselect("Auditoria", ["1", "2"])
 
         with tabs[5]:
             st.subheader("Fluxo/POP")
@@ -121,17 +119,20 @@ def cadastro_page():
 
         col6, col7 = st.columns(2)
 
-        # Form submission buttons
+        # Map string options to integer values
+        macroprocesso_pai_mapping = {"Opção 1": 1, "Opção 2": 2}
+        modelagem_status_mapping = {"Opção 1": 1, "Opção 2": 2}
+
         # Form submission buttons
         with col6:
             if st.form_submit_button("Salvar"):
                 # Obter os dados do formulário como um objeto Prc_Cad
                 process_data = Prc_Cad(
                     PRC_CODIGO=prc_codigo,
-                    PRC_MP_PAI=macroprocesso_pai,
+                    PRC_MP_PAI=macroprocesso_pai_mapping[macroprocesso_pai],
                     PRC_NIVEL=nivel,
                     PRC_NOME=prc_nome,
-                    PRC_MODELAGEM_STATUS=modelagem_status,
+                    PRC_MODELAGEM_STATUS=modelagem_status_mapping[modelagem_status],
                     PRC_OBJETIVO=prc_objetivo,
                     PRC_CONHEC_TEC_NOTA=conhecimento_tecnico,
                     PRC_CONHEC_GEST_NOTA=conhecimento_gestao,
@@ -141,7 +142,15 @@ def cadastro_page():
                     PRC_ESTR_FISICA_DESCR=estrutura_fisica_desc,
                     PRC_ESTR_LOGICA_NOTA=estrutura_logica,
                     PRC_ESTR_LOGICA_DESCR=estrutura_logica_desc,
-                    # ... (outros campos do formulário)
+                    PRC_RECURSOS_UTILIZ_ID=None,  # ajustar conforme necessário
+                    PRC_FORNE_ITENS_CONS=fornecedores,
+                    PRC_FLUXO_PROC=fluxo,
+                    PRC_POP_PROCESSO=pop,
+                    PRC_COMPLIANCE_ID=None,  # ajustar conforme necessário
+                    PRC_AUDITORIA_ID=None,  # ajustar conforme necessário
+                    PRC_DT_CADASTRO=datetime.now(),  # Adiciona a data atual para DT_CADASTRO
+                    PRC_DT_ALTERACAO=None,
+                    PRC_DT_EXCLUSAO=None,
                 )
 
                 with get_session() as db_session:
@@ -150,8 +159,7 @@ def cadastro_page():
                     existing_process = prc_cad_repo.get_by_codigo(prc_codigo)
 
                     if existing_process:
-                        prc_cad_repo.update(prc_codigo, process_data)
-                        st.success("Processo atualizado com sucesso!")
+                        st.error("Já existe um processo com esse código. Por favor, use um código diferente.")
                     else:
                         new_process = prc_cad_repo.create(process_data)
                         if new_process:

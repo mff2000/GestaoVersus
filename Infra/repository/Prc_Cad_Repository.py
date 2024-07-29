@@ -19,7 +19,10 @@ class PrcCadRepository:
         return self._session.query(Prc_Cad).all()
 
     def get_by_id(self, id: int):
-        return self._session.query(Prc_Cad).filter(Prc_Cad.PRC_ID== id).first()
+        return self._session.query(Prc_Cad).filter(Prc_Cad.PRC_ID == id).first()
+
+    def get_by_codigo(self, codigo: str):
+        return self._session.query(Prc_Cad).filter(Prc_Cad.PRC_CODIGO == codigo).first()
 
     def update(self, id: int, data: dict):
         try:
@@ -45,3 +48,4 @@ class PrcCadRepository:
         except IntegrityError as e:
             self._session.rollback()
             raise ValueError(f"Erro ao deletar registro Prc_Cad: {e}")
+
