@@ -1,4 +1,3 @@
-# infra/entities/Prc_Rotina.py
 from infra.configs.base import Base
 from sqlalchemy import Column, Integer, String, Text, DateTime
 
@@ -16,4 +15,5 @@ class Prc_Rotina(Base):
     PRC_ROTINA_DT_EXCLUSAO = Column(DateTime, nullable=True)
 
     def __repr__(self):
-        return f"Prc_Rotina(PRC_ROTINA_ID={self.PRC_ROTINA_ID}, PRC_ROTINA_TIPO={self.PRC_ROTINA_NOME}, PRC_ROTINA_PERIOD={self.PRC_ROTINA_PERIOD})"
+        return f"Prc_Rotina(PRC_ROTINA_ID={self.PRC_ROTINA_ID}, PRC_ROTINA_NOME={self.PRC_ROTINA_NOME}, PRC_ROTINA_PERIOD={self.PRC_ROTINA_PERIOD}, PRC_ROTINA_START={self.PRC_ROTINA_START}, PRC_ROTINA_DESCR={self.PRC_ROTINA_DESCR[:50]}...)"
+
