@@ -178,11 +178,11 @@ def cadastro_page():
 
         with col7:
             if st.form_submit_button("Limpar"):
-                st.experimental_rerun()
+                st.rerun()
 
     if st.sidebar.button("Logout"):
         st.session_state["logged_in"] = False
-        st.experimental_rerun()
+        st.rerun()
 
 
 # --- LÓGICA PRINCIPAL ---

@@ -6,13 +6,13 @@ class Prc_Macropr_Pai(Base):
     __tablename__ = 'PRC_MACROPR_PAI'
 
     PRC_MACROPR_PAI_ID = Column(Integer, primary_key=True, autoincrement=True)
-    PRC_MACROPR_PAI_GERENC_ID = Column(String(255))
-    PRC_MACROPR_PAI_MISSAO = Column(String(255))
+    PRC_MACROPR_PAI_GERENC_ID = Column(String(255), nullable=True)
+    PRC_MACROPR_PAI_MISSAO = Column(String(255), nullable=True)
     PRC_MACROPR_PAI_DONO_ID = Column(Integer, nullable=True)
-    PRC_MACROPR_PAI_EXIG_QUAL = Column(String(255))
+    PRC_MACROPR_PAI_EXIG_QUAL = Column(String(255), nullable=True)
     PRC_MACROPR_AVO_ID = Column(Integer, nullable=True)
-    PRC_MACROPR_INDICAD_ID = Column(String(255))
-    PRC_MACROPR_DT_CRIACAO = Column(DateTime, nullable=False)
+    PRC_MACROPR_INDICAD_ID = Column(String(255), nullable=True)
+    PRC_MACROPR_DT_CRIACAO = Column(DateTime)
     PRC_MACROPR_DT_ALTERACAO = Column(DateTime, nullable=True)
     PRC_MACROPR_DT_EXCLUSAO = Column(DateTime, nullable=True)
 

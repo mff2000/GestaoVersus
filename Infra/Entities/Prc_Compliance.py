@@ -6,11 +6,11 @@ class Prc_Compliance(Base):
     __tablename__ = 'PRC_COMPLIANCE'
 
     PRC_COMPLIANCE_ID = Column(Integer, primary_key=True, autoincrement=True)
-    PRC_COMPLIANCE_TIPO_REGRA = Column(String(255))
-    PRC_COMPLIANCE_DESCR_REGRA = Column(Text)  # Usei Text para permitir textos maiores
-    PRC_COMPLIANCE_SITUACAO_REGRA = Column(String(255))
-    PRC_COMPLIANCE_OBSERV = Column(Text)  # Usei Text para permitir textos maiores
-    PRC_COMPLIANCE_DT_CRIACAO = Column(DateTime, nullable=False)
+    PRC_COMPLIANCE_TIPO_REGRA = Column(String(255), nullable=True)
+    PRC_COMPLIANCE_DESCR_REGRA = Column(Text, nullable=True)  # Usei Text para permitir textos maiores
+    PRC_COMPLIANCE_SITUACAO_REGRA = Column(String(255), nullable=True)
+    PRC_COMPLIANCE_OBSERV = Column(Text, nullable=True)  # Usei Text para permitir textos maiores
+    PRC_COMPLIANCE_DT_CRIACAO = Column(DateTime)
     PRC_COMPLIANCE_DT_ALTERACAO = Column(DateTime, nullable=True)
     PRC_COMPLIANCE_DT_EXCLUSAO = Column(DateTime, nullable=True)
 

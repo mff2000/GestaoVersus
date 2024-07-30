@@ -22,4 +22,5 @@ from .Prc_Rotina import *
 from .Prj_Gestao import *
 from .Prc_Macropr_Pai import *
 from .Prc_Macropr_Avo import *
+from .Prc_Recurso_Utiliz import *
 # Importe outros modelos conforme necessário

@@ -55,7 +55,7 @@ def login_page():
                 st.session_state["logged_in"] = True
                 st.success("Login realizado com sucesso!")
                 st.info("Agora você pode acessar as outras páginas do sistema.")
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("E-mail ou senha inválidos!")
 
@@ -128,7 +128,7 @@ def app():
         # Botão de logout
         if st.sidebar.button("Logout"):
             st.session_state["logged_in"] = False
-            st.experimental_rerun()
+            st.rerun()
 
 # Executa a aplicação
 if __name__ == "__main__":
