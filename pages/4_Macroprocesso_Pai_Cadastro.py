@@ -14,7 +14,7 @@ st.set_page_config(
 def cadastro_macroprocesso_pai():
     st.title("Cadastro de Macroprocessos Pai")
 
-    # Dicionário para armazenar os valores do formulário
+    # Inicializa o dicionário form_data se ele não existir
     if "form_data" not in st.session_state:
         st.session_state["form_data"] = {
             "gerenc_id": "",
@@ -22,27 +22,15 @@ def cadastro_macroprocesso_pai():
             "dono_id": "",
             "exig_qual": "",
             "avo_id": "",
-            "indicad_id": ""
+            "indicad_id": "",
         }
 
     # Campos do formulário utilizando os valores do dicionário form_data
     gerenc_id = st.text_input("ID da Gerência", key="gerenc_id", value=st.session_state["form_data"]["gerenc_id"])
     missao = st.text_input("Missão", key="missao", value=st.session_state["form_data"]["missao"])
-    # Conversão condicional para o campo dono_id
-    dono_id = st.number_input(
-        "ID do Dono",
-        min_value=0,
-        key="dono_id",
-        value=int(st.session_state["form_data"]["dono_id"]) if st.session_state["form_data"]["dono_id"].isdigit() else 0  
-    )
+    dono_id = st.number_input("ID do Dono", min_value=0, key="dono_id", value=int(st.session_state["form_data"]["dono_id"]) if st.session_state["form_data"]["dono_id"].isdigit() else 0)
     exig_qual = st.text_input("Exigências de Qualificação", key="exig_qual", value=st.session_state["form_data"]["exig_qual"])
-    # Conversão condicional para o campo avo_id
-    avo_id = st.number_input(
-        "ID do Avô",
-        min_value=0,
-        key="avo_id",
-        value=int(st.session_state["form_data"]["avo_id"]) if st.session_state["form_data"]["avo_id"].isdigit() else 0  
-    )
+    avo_id = st.number_input("ID do Avô", min_value=0, key="avo_id", value=int(st.session_state["form_data"]["avo_id"]) if st.session_state["form_data"]["avo_id"].isdigit() else 0)
     indicad_id = st.text_input("ID dos Indicadores", key="indicad_id", value=st.session_state["form_data"]["indicad_id"])
 
     with st.form("cadastro_form"):
@@ -80,6 +68,10 @@ def cadastro_macroprocesso_pai():
                         "avo_id": "",
                         "indicad_id": ""
                     }
+
+                    # Reinicia o aplicativo para limpar o formulário
+                    st.experimental_rerun()
+
                 except ValueError as e:
                     st.error(str(e))
 

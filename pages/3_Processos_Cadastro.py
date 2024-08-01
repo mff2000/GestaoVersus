@@ -191,4 +191,3 @@ if st.session_state.get("logged_in", False):
     cadastro_page()
 else:
     st.warning("Você precisa fazer login para acessar esta página.")
-
