@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from infra.entities.Ger_Time import Ger_Time
+from infra.entities.Ger_Time import Ger_Time, datetime
 from sqlalchemy.exc import IntegrityError
 
 class GerTimeRepository:
