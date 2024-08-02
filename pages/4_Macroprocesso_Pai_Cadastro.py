@@ -11,27 +11,34 @@ st.set_page_config(
     layout="wide",
 )
 
+def initialize_form_data():
+    """
+    Inicializa o dicionário form_data no session_state com os valores padrão.
+    """
+    if "form_data" not in st.session_state:
+        st.session_state["form_data"] = {}
+
+    # Inicializa todas as chaves com valores padrão se não existirem
+    st.session_state["form_data"].setdefault("gerenc_id", "")
+    st.session_state["form_data"].setdefault("missao", "")
+    st.session_state["form_data"].setdefault("dono_id", "")
+    st.session_state["form_data"].setdefault("exig_qual", "")
+    st.session_state["form_data"].setdefault("avo_id", "")
+    st.session_state["form_data"].setdefault("indicad_id", "")
+
 def cadastro_macroprocesso_pai():
     st.title("Cadastro de Macroprocessos Pai")
 
-    # Inicializa o dicionário form_data se ele não existir
-    if "form_data" not in st.session_state:
-        st.session_state["form_data"] = {
-            "gerenc_id": "",
-            "missao": "",
-            "dono_id": "",
-            "exig_qual": "",
-            "avo_id": "",
-            "indicad_id": "",
-        }
+    # Inicializa o form_data se não existir
+    initialize_form_data()
 
     # Campos do formulário utilizando os valores do dicionário form_data
-    gerenc_id = st.text_input("ID da Gerência", key="gerenc_id", value=st.session_state["form_data"]["gerenc_id"])
-    missao = st.text_input("Missão", key="missao", value=st.session_state["form_data"]["missao"])
-    dono_id = st.number_input("ID do Dono", min_value=0, key="dono_id", value=int(st.session_state["form_data"]["dono_id"]) if st.session_state["form_data"]["dono_id"].isdigit() else 0)
-    exig_qual = st.text_input("Exigências de Qualificação", key="exig_qual", value=st.session_state["form_data"]["exig_qual"])
-    avo_id = st.number_input("ID do Avô", min_value=0, key="avo_id", value=int(st.session_state["form_data"]["avo_id"]) if st.session_state["form_data"]["avo_id"].isdigit() else 0)
-    indicad_id = st.text_input("ID dos Indicadores", key="indicad_id", value=st.session_state["form_data"]["indicad_id"])
+    gerenc_id = st.text_input("ID da Gerência", value=st.session_state["form_data"]["gerenc_id"])
+    missao = st.text_input("Missão", value=st.session_state["form_data"]["missao"])
+    dono_id = st.number_input("ID do Dono", min_value=0, value=int(st.session_state["form_data"]["dono_id"]) if st.session_state["form_data"]["dono_id"].isdigit() else 0)
+    exig_qual = st.text_input("Exigências de Qualificação", value=st.session_state["form_data"]["exig_qual"])
+    avo_id = st.number_input("ID do Avô", min_value=0, value=int(st.session_state["form_data"]["avo_id"]) if st.session_state["form_data"]["avo_id"].isdigit() else 0)
+    indicad_id = st.text_input("ID dos Indicadores", value=st.session_state["form_data"]["indicad_id"])
 
     with st.form("cadastro_form"):
         if st.form_submit_button("Cadastrar"):
@@ -39,12 +46,14 @@ def cadastro_macroprocesso_pai():
                 repo = PrcMacroprocessoPaiRepository(session)
 
                 # Atualiza o dicionário form_data com os valores do formulário
-                st.session_state["form_data"]["gerenc_id"] = gerenc_id
-                st.session_state["form_data"]["missao"] = missao
-                st.session_state["form_data"]["dono_id"] = dono_id
-                st.session_state["form_data"]["exig_qual"] = exig_qual
-                st.session_state["form_data"]["avo_id"] = avo_id
-                st.session_state["form_data"]["indicad_id"] = indicad_id
+                st.session_state["form_data"].update({
+                    "gerenc_id": gerenc_id,
+                    "missao": missao,
+                    "dono_id": dono_id,
+                    "exig_qual": exig_qual,
+                    "avo_id": avo_id,
+                    "indicad_id": indicad_id,
+                })
 
                 try:
                     # Cadastra o macroprocesso pai usando os valores do dicionário form_data
@@ -60,14 +69,7 @@ def cadastro_macroprocesso_pai():
                     st.success(f"Macroprocesso Pai cadastrado com sucesso! (ID: {novo_macroprocesso_pai.PRC_MACROPR_PAI_ID})")
 
                     # Limpa o dicionário form_data após o cadastro
-                    st.session_state["form_data"] = {
-                        "gerenc_id": "",
-                        "missao": "",
-                        "dono_id": "",
-                        "exig_qual": "",
-                        "avo_id": "",
-                        "indicad_id": ""
-                    }
+                    initialize_form_data()
 
                     # Reinicia o aplicativo para limpar o formulário
                     st.experimental_rerun()
@@ -80,3 +82,4 @@ if st.session_state.get("logged_in", False):
     cadastro_macroprocesso_pai()
 else:
     st.warning("Você precisa fazer login para acessar esta página.")
+

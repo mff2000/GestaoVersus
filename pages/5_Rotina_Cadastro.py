@@ -11,32 +11,37 @@ st.set_page_config(
     layout="wide",
 )
 
+def initialize_form_data():
+    """
+    Inicializa o dicionário form_data no session_state com os valores padrão.
+    """
+    if "form_data" not in st.session_state:
+        st.session_state["form_data"] = {}
+
+    # Inicializa todas as chaves com valores padrão se não existirem
+    st.session_state["form_data"].setdefault("nome", "")
+    st.session_state["form_data"].setdefault("period", "Diária")
+    st.session_state["form_data"].setdefault("start", "")
+    st.session_state["form_data"].setdefault("descr", "")
+    st.session_state["form_data"].setdefault("observ", "")
+
 def cadastro_rotina():
     st.title("Cadastro de Rotinas")
 
-    # Dicionário para armazenar os valores do formulário
-    if "form_data" not in st.session_state:
-        st.session_state["form_data"] = {
-            "nome": "",
-            "period": "Diária",  # Valor inicial para evitar KeyError
-            "start": "",
-            "descr": "",
-            "observ": ""
-        }
+    # Inicializa o form_data se não existir
+    initialize_form_data()
 
     # Campos do formulário utilizando os valores do dicionário form_data
-    nome = st.text_input("Nome da Rotina", key="nome", value=st.session_state["form_data"]["nome"])
+    nome = st.text_input("Nome da Rotina", value=st.session_state["form_data"]["nome"])
 
     # Corrige o index do selectbox
     period_options = ["Diária", "Semanal", "Mensal", "Anual"]
     default_index = period_options.index(st.session_state["form_data"]["period"]) if st.session_state["form_data"]["period"] in period_options else 0
-    period = st.selectbox("Periodicidade", period_options, key="period", index=default_index)
+    period = st.selectbox("Periodicidade", period_options, index=default_index)
 
-    # Campo para o gatilho (string)
-    start = st.text_input("Gatilho", key="start", value=st.session_state["form_data"]["start"])
-
-    descr = st.text_area("Descrição", key="descr", value=st.session_state["form_data"]["descr"])
-    observ = st.text_area("Observações", key="observ", value=st.session_state["form_data"]["observ"])
+    start = st.text_input("Gatilho", value=st.session_state["form_data"]["start"])
+    descr = st.text_area("Descrição", value=st.session_state["form_data"]["descr"])
+    observ = st.text_area("Observações", value=st.session_state["form_data"]["observ"])
 
     # Botão de envio dentro do formulário
     with st.form("cadastro_form"):
@@ -45,11 +50,13 @@ def cadastro_rotina():
                 repo = PrcRotinaRepository(session)
 
                 # Atualiza o dicionário form_data com os valores do formulário
-                st.session_state["form_data"]["nome"] = nome
-                st.session_state["form_data"]["period"] = period
-                st.session_state["form_data"]["start"] = start
-                st.session_state["form_data"]["descr"] = descr
-                st.session_state["form_data"]["observ"] = observ
+                st.session_state["form_data"].update({
+                    "nome": nome,
+                    "period": period,
+                    "start": start,
+                    "descr": descr,
+                    "observ": observ,
+                })
 
                 try:
                     # Cadastra a rotina usando os valores do dicionário form_data
@@ -64,13 +71,11 @@ def cadastro_rotina():
                     st.success(f"Rotina cadastrada com sucesso! (ID: {nova_rotina.PRC_ROTINA_ID})")
 
                     # Limpa o dicionário form_data após o cadastro
-                    st.session_state["form_data"] = {
-                        "nome": "",
-                        "period": "Diária",
-                        "start": "",
-                        "descr": "",
-                        "observ": ""
-                    }
+                    initialize_form_data()
+
+                    # Reinicia o aplicativo para limpar o formulário
+                    st.experimental_rerun()
+
                 except ValueError as e:
                     st.error(str(e))
 

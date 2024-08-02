@@ -11,38 +11,48 @@ st.set_page_config(
     layout="wide",
 )
 
+def initialize_form_data():
+    """
+    Inicializa o dicionário form_data no session_state com os valores padrão.
+    """
+    if "form_data" not in st.session_state:
+        st.session_state["form_data"] = {}
+
+    # Inicializa todas as chaves com valores padrão se não existirem
+    st.session_state["form_data"].setdefault("GER_TIME_NOME", "")
+    st.session_state["form_data"].setdefault("GER_TIME_SIGLA", "")
+    st.session_state["form_data"].setdefault("GER_TIME_LIDER_ID", 0)
+    st.session_state["form_data"].setdefault("GER_TIME_DT_CRIACAO", datetime.now())
+    st.session_state["form_data"].setdefault("GER_TIME_DT_ALTERACAO", datetime.now())
+    st.session_state["form_data"].setdefault("GER_TIME_DT_EXCLUSAO", None)
+
 def cadastro_time():
     st.title("Cadastro de Times")
 
-    # Dicionário para armazenar os valores do formulário
-    if "form_data" not in st.session_state:
-        st.session_state["form_data"] = {
-            "GER_TIME_NOME": "",
-            "GER_TIME_SIGLA": "",
-            "GER_TIME_LIDER_ID": 0,  # Valor inicial para o ID do líder (0 ou None)
-            "GER_TIME_DT_CRIACAO": datetime.now(),
-            "GER_TIME_DT_ALTERACAO": datetime.now(),
-            "GER_TIME_DT_EXCLUSAO": None,
-        }
+    # Inicializa o form_data se não existir
+    initialize_form_data()
 
     # Campos do formulário utilizando os valores do dicionário form_data
-    nome = st.text_input("Nome do Time", key="nome", value=st.session_state["form_data"]["GER_TIME_NOME"])
-    sigla = st.text_input("Sigla do Time", key="sigla", value=st.session_state["form_data"]["GER_TIME_SIGLA"])
+    nome = st.text_input("Nome do Time", value=st.session_state["form_data"]["GER_TIME_NOME"])
+    sigla = st.text_input("Sigla do Time", value=st.session_state["form_data"]["GER_TIME_SIGLA"])
 
     # Campo para selecionar o líder do time (você precisará buscar os usuários do banco de dados)
-    lider_id = st.number_input("ID do Líder", min_value=0, key="lider_id", value=st.session_state["form_data"]["GER_TIME_LIDER_ID"])
+    lider_id = st.number_input("ID do Líder", min_value=0, value=st.session_state["form_data"]["GER_TIME_LIDER_ID"])
 
     with st.form("cadastro_form"):
         if st.form_submit_button("Cadastrar"):
             with get_session() as session:
                 repo = GerTimeRepository(session)
 
-                # Atualiza o dicionário form_data com os valores do formulário, usando os nomes corretos dos atributos
-                st.session_state["form_data"]["GER_TIME_NOME"] = nome
-                st.session_state["form_data"]["GER_TIME_SIGLA"] = sigla
-                st.session_state["form_data"]["GER_TIME_LIDER_ID"] = lider_id
-                st.session_state["form_data"]["GER_TIME_DT_CRIACAO"] = datetime.now()
-                st.session_state["form_data"]["GER_TIME_DT_ALTERACAO"] = datetime.now()
+                # Atualiza o dicionário form_data com os valores do formulário
+                st.session_state["form_data"].update({
+                    "GER_TIME_NOME": nome,
+                    "GER_TIME_SIGLA": sigla,
+                    "GER_TIME_LIDER_ID": lider_id,
+                    "GER_TIME_DT_CRIACAO": datetime.now(),
+                    "GER_TIME_DT_ALTERACAO": datetime.now(),
+                    "GER_TIME_DT_EXCLUSAO": None,
+                })
 
                 try:
                     # Passa o dicionário form_data diretamente para o create
@@ -50,14 +60,11 @@ def cadastro_time():
                     st.success(f"Time cadastrado com sucesso! (ID: {novo_time.GER_TIME_ID})")
 
                     # Limpa o dicionário form_data após o cadastro
-                    st.session_state["form_data"] = {
-                        "GER_TIME_NOME": "",
-                        "GER_TIME_SIGLA": "",
-                        "GER_TIME_LIDER_ID": 0,
-                        "GER_TIME_DT_CRIACAO": datetime.now(),
-                        "GER_TIME_DT_ALTERACAO": datetime.now(),
-                        "GER_TIME_DT_EXCLUSAO": None,
-                    }
+                    initialize_form_data()
+
+                    # Reinicia o aplicativo para limpar o formulário
+                    st.experimental_rerun()
+
                 except ValueError as e:
                     st.error(str(e))
 

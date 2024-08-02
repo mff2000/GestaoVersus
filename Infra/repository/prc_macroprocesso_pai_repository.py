@@ -1,51 +1,56 @@
-from sqlalchemy.orm import Session
 from infra.entities.Prc_Macropr_Pai import Prc_Macropr_Pai
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
+from typing import List, Optional
+from datetime import datetime
 
 class PrcMacroprocessoPaiRepository:
+
     def __init__(self, session: Session):
-        self._session = session
+        self.session = session
 
-    def create(self, data: Prc_Macropr_Pai):  # Recebe o objeto Prc_Macropr_Pai como parâmetro
-        try:
-            self._session.add(data)  # Adiciona o objeto à sessão
-            self._session.commit()
-            return data
-        except IntegrityError as e:
-            self._session.rollback()
-            raise ValueError(f"Erro ao criar registro Prc_Macropr_Pai: {str(e)}")  # Fornece detalhes do erro
+    def create(self, prc_macroprocesso_pai: Prc_Macropr_Pai) -> Prc_Macropr_Pai:
+        """
+        Adiciona um novo macroprocesso pai ao banco de dados.
+        """
+        self.session.add(prc_macroprocesso_pai)
+        self.session.commit()
+        self.session.refresh(prc_macroprocesso_pai)
+        return prc_macroprocesso_pai
 
-    def get_all(self):
-        return self._session.query(Prc_Macropr_Pai).all()
+    def get_by_id(self, prc_macropr_pai_id: int) -> Optional[Prc_Macropr_Pai]:
+        """
+        Busca um macroprocesso pai pelo ID.
+        """
+        return self.session.query(Prc_Macropr_Pai).filter_by(PRC_MACROPR_PAI_ID=prc_macropr_pai_id).first()
 
-    def get_by_id(self, id: int):
-        return self._session.query(Prc_Macropr_Pai).filter_by(PRC_MACROPR_PAI_ID=id).first()
+    def get_all(self) -> List[Prc_Macropr_Pai]:
+        """
+        Retorna todos os macroprocessos pai.
+        """
+        return self.session.query(Prc_Macropr_Pai).all()
 
-    # Não há um campo "codigo" na entidade Prc_Macropr_Pai, então vamos criar um get_by_gerenc_id()
-    def get_by_gerenc_id(self, gerenc_id: str):
-        return self._session.query(Prc_Macropr_Pai).filter_by(PRC_MACROPR_PAI_GERENC_ID=gerenc_id).first()
-   
-    def update(self, id: int, data: dict):
-        try:
-            macroprocesso_pai = self.get_by_id(id)
-            if macroprocesso_pai:
-                for key, value in data.items():
-                    setattr(macroprocesso_pai, key, value)
-                self._session.commit()
-                return macroprocesso_pai
-            return None
-        except IntegrityError as e:
-            self._session.rollback()
-            raise ValueError(f"Erro ao atualizar registro Prc_Macropr_Pai: {str(e)}")  # Fornece detalhes do erro
+    def update(self, prc_macropr_pai_id: int, updated_data: dict) -> Optional[Prc_Macropr_Pai]:
+        """
+        Atualiza um macroprocesso pai existente.
+        """
+        prc_macropr_pai = self.get_by_id(prc_macropr_pai_id)
+        if prc_macropr_pai:
+            for key, value in updated_data.items():
+                setattr(prc_macropr_pai, key, value)
+            prc_macropr_pai.PRC_MACROPR_DT_ALTERACAO = datetime.now()
+            self.session.commit()
+            self.session.refresh(prc_macropr_pai)
+        return prc_macropr_pai
 
-    def delete(self, id: int):
-        try:
-            macroprocesso_pai = self.get_by_id(id)
-            if macroprocesso_pai:
-                self._session.delete(macroprocesso_pai)
-                self._session.commit()
-                return True
-            return False
-        except IntegrityError as e:
-            self._session.rollback()
-            raise ValueError(f"Erro ao deletar registro Prc_Macropr_Pai: {str(e)}")  # Fornece detalhes do erro
+    def delete(self, prc_macropr_pai_id: int) -> bool:
+        """
+        Exclui um macroprocesso pai pelo ID.
+        """
+        prc_macropr_pai = self.get_by_id(prc_macropr_pai_id)
+        if prc_macropr_pai:
+            self.session.delete(prc_macropr_pai)
+            self.session.commit()
+            return True
+        return False
+
+
